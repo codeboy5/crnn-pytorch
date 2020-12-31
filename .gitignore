@@ -2,6 +2,10 @@
 .vscode
 .DS_Store
 Pipfile*
+data/mnt
+data/mjsynth.tar.gz
+data/IIIT5K
+data/svt1
 
 # proto related files
 *_pb2.py
