@@ -77,29 +77,25 @@ def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f'device: {device}')
 
-    test_dataset = Synth90kDataset(root_dir=config['data_dir'], mode='test',
-                                   img_height=img_height, img_width=img_width)
-    
-    
-
-    test_loader = DataLoader(
-        dataset=test_dataset,
-        batch_size=eval_batch_size,
-        shuffle=False,
-        num_workers=cpu_workers,
-        collate_fn=synth90k_collate_fn)
-    
-    # test_dataset = IIIT5KDataset(root_dir='data/IIIT5K/',mode='train',img_height=img_height, img_width=img_width)
+    # test_dataset = Synth90kDataset(root_dir=config['data_dir'], mode='test',
+    #                                img_height=img_height, img_width=img_width)
     # test_loader = DataLoader(
     #     dataset=test_dataset,
     #     batch_size=eval_batch_size,
     #     shuffle=False,
     #     num_workers=cpu_workers,
-    #     collate_fn=iiit5k_collate_fn)
-    # num_class = len(IIIT5KDataset.LABEL2CHAR) + 1
-
-    num_class = len(Synth90kDataset.LABEL2CHAR) + 1
+    #     collate_fn=synth90k_collate_fn)
+    # num_class = len(Synth90kDataset.LABEL2CHAR) + 1
     
+    test_dataset = IIIT5KDataset(root_dir='data/IIIT5K/',mode='train',img_height=img_height, img_width=img_width)
+    test_loader = DataLoader(
+        dataset=test_dataset,
+        batch_size=eval_batch_size,
+        shuffle=False,
+        num_workers=cpu_workers,
+        collate_fn=iiit5k_collate_fn)
+    num_class = len(IIIT5KDataset.LABEL2CHAR) + 1
+
     crnn = CRNN(1, img_height, img_width, num_class,
                 map_to_seq_hidden=config['map_to_seq_hidden'],
                 rnn_hidden=config['rnn_hidden'],

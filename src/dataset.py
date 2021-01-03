@@ -106,6 +106,8 @@ class IIIT5KDataset(Dataset):
         self.texts = texts
         self.img_height = img_height
         self.img_width = img_width
+
+    def _load_from_raw_files(self, root_dir, mode):
         
         data_str = None
         if mode == 'train':
