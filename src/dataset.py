@@ -77,8 +77,9 @@ class Synth90kDataset(Dataset):
             target_length = [len(target)]
 
             target = torch.LongTensor(target)
-            target_length = torch.LongTensor(target_length)
-            return image, target, target_length
+            target_length = torch.LongTensor(t    CHARS = '0123456789abcdefghijklmnopqrstuvwxyz'
+    CHAR2LABEL = {char: i + 1 for i, char in enumerate(CHARS)}
+    LABEL2CHAR = {label: char for char, label in CHAR2LABEL.items()}th
         else:
             return image
 
@@ -104,10 +105,9 @@ class IIIT5KDataset(Dataset):
 
         self.paths = paths
         self.texts = texts
-        self.img_height = img_height
-        self.img_width = img_width
-
-    def _load_from_raw_files(self, root_dir, mode):
+        self.img_height = img_height    CHARS = '0123456789abcdefghijklmnopqrstuvwxyz'
+    CHAR2LABEL = {char: i + 1 for i, char in enumerate(CHARS)}
+    LABEL2CHAR = {label: char for char, label in CHAR2LABEL.items()}ode):
         
         data_str = None
         if mode == 'train':
@@ -162,3 +162,8 @@ def iiit5k_collate_fn(batch):
     targets = torch.cat(targets, 0)
     target_lengths = torch.cat(target_lengths, 0)
     return images, targets, target_lengths
+
+# class SVTDataset(Dataset):
+#     CHARS = '0123456789abcdefghijklmnopqrstuvwxyz'
+#     CHAR2LABEL = {char: i + 1 for i, char in enumerate(CHARS)}
+#     LABEL2CHAR = {label: char for char, label in CHAR2LABEL.items()}
