@@ -96,24 +96,30 @@ def main():
             if i % show_interval == 0:
                 print('train_batch_loss[', i, ']: ', loss / train_size)
 
-            if i % valid_interval == 0:
-                evaluation = evaluate(crnn, valid_loader, criterion,
-                                      decode_method=config['decode_method'],
-                                      beam_size=config['beam_size'])
-                print('valid_evaluation: loss={loss}, acc={acc}'.format(**evaluation))
+            # if i % valid_interval == 0:
+            #     evaluation = evaluate(crnn, valid_loader, criterion,
+            #                           decode_method=config['decode_method'],
+            #                           beam_size=config['beam_size'])
+            #     print('valid_evaluation: loss={loss}, acc={acc}'.format(**evaluation))
 
-                if i % save_interval == 0:
-                    prefix = 'crnn'
-                    loss = evaluation['loss']
-                    save_model_path = os.path.join(config['checkpoints_dir'],
-                                                   f'{prefix}_{i:06}_loss{loss}.pt')
-                    torch.save(crnn.state_dict(), save_model_path)
-                    print('save model at ', save_model_path)
+            #     if i % save_interval == 0:
+            #         prefix = 'crnn'
+            #         loss = evaluation['loss']
+            #         save_model_path = os.path.join(config['checkpoints_dir'],
+            #                                        f'{prefix}_{i:06}_loss{loss}.pt')
+            #         torch.save(crnn.state_dict(), save_model_path)
+            #         print('save model at ', save_model_path)
 
             i += 1
 
         print('train_loss: ', tot_train_loss / tot_train_count)
-
-
+        evaluation = evaluate(crnn, valid_loader, criterion,decode_method=config['decode_method'],eam_size=config['beam_size'])
+        print('valid_evaluation: loss={loss}, acc={acc}'.format(**evaluation))
+        prefix = 'crnn'
+        loss = evaluation['loss']
+        save_model_path = os.path.join(config['checkpoints_dir'],f'{prefix}_{epoch}_loss{loss}.pt')
+        torch.save(crnn.state_dict(), save_model_path)
+        print('save model at ', save_model_path)
+        
 if __name__ == '__main__':
     main()
