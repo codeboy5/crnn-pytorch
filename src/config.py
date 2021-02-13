@@ -10,14 +10,14 @@ common_config = {
 
 train_config = {
     'epochs': 1,
-    'train_batch_size': 32,
+    'train_batch_size': 64,
     'eval_batch_size': 512,
     'lr': 0.0005,
-    'show_interval': 1000,
+    'show_interval': 500,
     'valid_interval': 20000,
     'save_interval': 20000,
     'cpu_workers': 4,
-    'reload_checkpoint': 'checkpoints/crnn_100000_loss0.8949309229931258.pt',
+    'reload_checkpoint': 'checkpoints/crnn_4_loss1.702002783203125.pt',
     'valid_max_iter': 100,
     'decode_method': 'greedy',
     'beam_size': 10,
@@ -26,9 +26,9 @@ train_config = {
 train_config.update(common_config)
 
 evaluate_config = {
-    'eval_batch_size': 512,
+    'eval_batch_size': 256,
     'cpu_workers': 4,
-    'reload_checkpoint': 'checkpoints/crnn_synth90k.pt',
+    'reload_checkpoint': 'checkpoints/crnn.pth',
     'decode_method': 'greedy',
     'beam_size': 10,
 }

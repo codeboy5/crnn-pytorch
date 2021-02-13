@@ -6,6 +6,8 @@ data/mnt
 data/mjsynth.tar.gz
 data/IIIT5K
 data/svt1
+data/idcar03
+data/idcar13
 
 # proto related files
 *_pb2.py

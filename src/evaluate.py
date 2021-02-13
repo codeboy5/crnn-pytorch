@@ -5,6 +5,8 @@ from tqdm import tqdm
 
 from dataset import Synth90kDataset, synth90k_collate_fn
 from dataset import IIIT5KDataset, iiit5k_collate_fn
+from dataset import IDCAR03Dataset, idcar03_collate_fn
+from dataset import IDCAR13Dataset, idcar13_collate_fn
 from model import CRNN
 from ctc_decoder import ctc_decode
 from config import evaluate_config as config
@@ -87,15 +89,33 @@ def main():
     #     collate_fn=synth90k_collate_fn)
     # num_class = len(Synth90kDataset.LABEL2CHAR) + 1
     
-    test_dataset = IIIT5KDataset(root_dir='data/IIIT5K/',mode='train',img_height=img_height, img_width=img_width)
+    # test_dataset = IIIT5KDataset(root_dir='data/IIIT5K/',mode='train',img_height=img_height, img_width=img_width)
+    # test_loader = DataLoader(
+    #     dataset=test_dataset,
+    #     batch_size=eval_batch_size,
+    #     shuffle=False,
+    #     num_workers=cpu_workers,
+    #     collate_fn=iiit5k_collate_fn)
+    # num_class = len(IIIT5KDataset.LABEL2CHAR) + 1
+    
+    # test_dataset = IDCAR03Dataset(root_dir='data/idcar03/',mode='train',img_height=img_height, img_width=img_width)
+    # test_loader = DataLoader(
+    #     dataset=test_dataset,
+    #     batch_size=eval_batch_size,
+    #     shuffle=False,
+    #     num_workers=cpu_workers,
+    #     collate_fn=idcar03_collate_fn)
+    # num_class = len(IDCAR03Dataset.LABEL2CHAR) + 1
+    
+    test_dataset = IDCAR13Dataset(root_dir='data/idcar13/',mode='train',img_height=img_height, img_width=img_width)
     test_loader = DataLoader(
         dataset=test_dataset,
         batch_size=eval_batch_size,
         shuffle=False,
         num_workers=cpu_workers,
-        collate_fn=iiit5k_collate_fn)
-    num_class = len(IIIT5KDataset.LABEL2CHAR) + 1
-
+        collate_fn=idcar13_collate_fn)
+    num_class = len(IDCAR13Dataset.LABEL2CHAR) + 1
+    
     crnn = CRNN(1, img_height, img_width, num_class,
                 map_to_seq_hidden=config['map_to_seq_hidden'],
                 rnn_hidden=config['rnn_hidden'],
