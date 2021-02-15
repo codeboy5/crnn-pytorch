@@ -8,6 +8,7 @@ data/IIIT5K
 data/svt1
 data/idcar03
 data/idcar13
+data/UPTI
 
 # proto related files
 *_pb2.py
