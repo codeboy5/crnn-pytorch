@@ -1,20 +1,27 @@
-        # paths = []
-        # texts = []
-        # with open(os.path.join(root_dir, paths_file), 'r') as fr:
-        #     for line in fr.readlines():
-        #         path, index_str = line.strip().split(' ')
-        #         path = os.path.join(root_dir, path)
-        #         index = int(index_str)
-        #         text = mapping[index]
-        #         paths.append(path)
-        #         texts.append(text)
-        # return paths, texts
-        
-        
-# file = 'data/idcar13/Challenge2_Test_Task3_GT.txt'
+CHARS = """۹۳۲۱۸۰۴۵۷ٖ٦)ٍٰﷺا⸮-ٴ/۔ہ>(<ً:ً"ّ؛]%[}!{،آڙؤۓءۀڈرةذوےزئڑدںبتسعغنیموھفشقصخلآطگکضجظحثٹپچ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ…#"+"""
 
-# with open(file, 'r') as fr:
-#     for line in fr.readlines():
-#         path, index_str = line.strip().split(' ')
-#         path = path.split(',')[0]
-#         print(index_str.strip('"'))
+CHAR2LABEL = {char: i + 1 for i, char in enumerate(CHARS)}
+
+# print(CHAR2LABEL)
+
+import io, os
+
+n = set()
+
+count = 0
+
+for filename in os.listdir('UPTI/groundtruth'):
+    if filename.endswith('.txt'):
+        filename = os.path.join('UPTI/groundtruth',filename)
+        with io.open(filename, 'r', encoding='utf8') as f:
+            text = f.read()
+            text = text.strip('\n')
+            for c in text:
+                if (c == ' ' or c == '\n') :
+                    continue
+                if c not in CHAR2LABEL:
+                    count -= 1
+                    break
+                    # n.add(c)
+
+print(count)
