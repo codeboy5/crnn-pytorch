@@ -8,6 +8,7 @@ from torch.nn import CTCLoss
 
 from dataset import Synth90kDataset, synth90k_collate_fn
 from dataset import IIIT5KDataset, iiit5k_collate_fn
+from dataset import UPTIDataset, upti_collate_fn
 from model import CRNN
 from evaluate import evaluate
 from config import train_config as config
@@ -51,32 +52,45 @@ def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f'device: {device}')
 
-    train_dataset = Synth90kDataset(root_dir=data_dir, mode='train',
+    # train_dataset = Synth90kDataset(root_dir=data_dir, mode='train',
+    #                                 img_height=img_height, img_width=img_width)
+    # # valid_dataset = Synth90kDataset(root_dir=data_dir, mode='dev',
+    # #                                 img_height=img_height, img_width=img_width)
+    # valid_dataset = IIIT5KDataset(root_dir='data/IIIT5K/',mode='train',img_height=img_height, img_width=img_width)
+
+    train_dataset = UPTIDataset(root_dir=data_dir, mode='train',
                                     img_height=img_height, img_width=img_width)
     # valid_dataset = Synth90kDataset(root_dir=data_dir, mode='dev',
     #                                 img_height=img_height, img_width=img_width)
-    valid_dataset = IIIT5KDataset(root_dir='data/IIIT5K/',mode='train',img_height=img_height, img_width=img_width)
+    # valid_dataset = IIIT5KDataset(root_dir='data/IIIT5K/',mode='train',img_height=img_height, img_width=img_width)
+
+    # train_loader = DataLoader(
+    #     dataset=train_dataset,
+    #     batch_size=train_batch_size,
+    #     shuffle=True,
+    #     num_workers=cpu_workers,
+    #     collate_fn=synth90k_collate_fn)
 
     train_loader = DataLoader(
         dataset=train_dataset,
         batch_size=train_batch_size,
         shuffle=True,
         num_workers=cpu_workers,
-        collate_fn=synth90k_collate_fn)
+        collate_fn=upti_collate_fn)
     # valid_loader = DataLoader(
     #     dataset=valid_dataset,
     #     batch_size=eval_batch_size,
     #     shuffle=True,
     #     num_workers=cpu_workers,
     #     collate_fn=synth90k_collate_fn)
-    valid_loader = DataLoader(
-        dataset=valid_dataset,
-        batch_size=eval_batch_size,
-        shuffle=True,
-        num_workers=cpu_workers,
-        collate_fn=iiit5k_collate_fn)
+    # valid_loader = DataLoader(
+    #     dataset=valid_dataset,
+    #     batch_size=eval_batch_size,
+    #     shuffle=True,
+    #     num_workers=cpu_workers,
+    #     collate_fn=iiit5k_collate_fn)
 
-    num_class = len(Synth90kDataset.LABEL2CHAR) + 1
+    num_class = len(UPTIDataset.LABEL2CHAR) + 1
     crnn = CRNN(1, img_height, img_width, num_class,
                 map_to_seq_hidden=config['map_to_seq_hidden'],
                 rnn_hidden=config['rnn_hidden'],

@@ -367,7 +367,9 @@ class UPTIDataset (Dataset):
                 tp = os.path.join(root_dir,'groundtruth') + "/"  + path.split('/')[-1].split('.')[0] + '.gt.txt'
                 with io.open(tp, 'r', encoding='utf8') as f:
                     text = f.read()
+                    text = text.strip()
                     text = text.strip('\n')
+                    text = text.replace(' ','')
                 paths.append(path)
                 texts.append(text)
 
@@ -381,7 +383,7 @@ class UPTIDataset (Dataset):
 
         try:
             image = Image.open(path).convert('L')  # grey-scale
-            image = image.transpose(PIL.Image.FLIP_LEFT_RIGHT)
+            # image = image.transpose(Image.FLIP_LEFT_RIGHT)
         except IOError:
             print('Corrupted image for %d' % index)
             return self[index + 1]

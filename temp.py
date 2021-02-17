@@ -4,45 +4,49 @@ CHAR2LABEL = {char: i + 1 for i, char in enumerate(CHARS)}
 
 # print(CHAR2LABEL)
 
-# import io, os
+import io, os
 
 # n = set()
 
 # files = []
-# count = 0
+count = 0
 
-# for filename in os.listdir('data/UPTI/groundtruth'):
-#     if filename.endswith('.txt'):
-#         name = filename.split('.')[0] + ".png"
-#         filename = os.path.join('data/UPTI/groundtruth',filename)
-#         with io.open(filename, 'r', encoding='utf8') as f:
-#             text = f.read()
-#             text = text.strip('\n')
-#             valid = True
-#             for c in text:
-#                 if (c == ' ' or c == '\n') :
-#                     continue
-#                 if c not in CHAR2LABEL:
-#                     count -= 1
-#                     valid = False
-#                     break
-#             if valid:
-#                 pth = os.path.join('line_undegraded',name)
-#                 with open('data/UPTI/train.txt','a') as the_file:
-#                     the_file.write(pth+"\n")
+for filename in os.listdir('data/UPTI/groundtruth'):
+    if filename.endswith('.txt'):
+        name = filename.split('.')[0] + ".png"
+        filename = os.path.join('data/UPTI/groundtruth',filename)
+        with io.open(filename, 'r', encoding='utf8') as f:
+            text = f.read()
+            text = text.strip()
+            text = text.strip('\n')
+            text = text.replace(' ','')
+            valid = True
+            for c in text:
+                if (c == '\n') :
+                    continue
+                if c not in CHAR2LABEL:
+                    count -= 1
+                    valid = False
+                    break
+            if valid:
+                pth = os.path.join('line_undegraded',name)
+                with open('data/UPTI/train.txt','a') as the_file:
+                    the_file.write(pth+"\n")
 
-import os, io
+print(count)
 
-paths_file = 'train.txt'
-root_dir = 'data/UPTI'
+# import os, io
 
-paths = []
-texts = []
+# paths_file = 'train.txt'
+# root_dir = 'data/UPTI'
+
+# paths = []
+# texts = []
 
 
 
-    # return paths, texts
+#     # return paths, texts
 
-print(paths[10])
+# print(paths[10])
 
-print(texts[10])
+# print(texts[10])
